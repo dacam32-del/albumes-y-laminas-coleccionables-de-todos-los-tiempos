@@ -61,4 +61,16 @@ $('g').innerHTML=!D.length?'<div class="empty">★ INSERT COIN ★<br>Pronto lle
 const LB={id:'Código',tipo:'Tipo',titulo:'Título',editorial:'Editorial',anio:'Año',epoca:'Época',pais:'País',completitud:'Completitud',estado:'Estado',autenticidad:'Autenticidad',coleccionabilidad:'Coleccionabilidad hoy',valor_internacional_usd:'Valor internacional (USD)',valor_internacional_clp:'Valor internacional (CLP)',venta_chile_clp:'Venta en Chile (CLP)',valor_nacional:'Valoración nacional',stock:'Stock',notas:'Notas',dolar:'Dólar usado',fecha:'Fecha tasación'};
 function sh(id){const p=D.find(x=>x.id==id);$('mb').innerHTML=`<span class="x" onclick="$('m').classList.remove('on')">×</span><h2>${e(p.titulo)}</h2><div style="color:var(--cy)">${e(p.editorial)}</div><div class="ph">${p.imgs.map(i=>`<a href="${i}" target="_blank"><img src="${i}"></a>`).join('')}</div><table>${Object.entries(LB).filter(([k])=>p[k]!=null&&p[k]!=='').map(([k,l])=>`<tr><td>${l}</td><td>${e(txt(p[k]))}</td></tr>`).join('')}</table>`;$('m').classList.add('on')}
 $('m').onclick=ev=>{if(ev.target.id=='m')$('m').classList.remove('on')};document.onkeydown=ev=>{if(ev.key=='Escape')$('m').classList.remove('on')};r();
-</script></body></html>
+</script><div id="musica-credito" style="text-align:center;font-size:11px;opacity:.6;padding:8px 8px 70px">Música: "Voxel Revolution" de Kevin MacLeod (<a href="https://incompetech.com" style="color:inherit">incompetech.com</a>), licencia <a href="https://creativecommons.org/licenses/by/4.0/" style="color:inherit">CC BY 4.0</a></div>
+<audio id="bgm" src="audio/musica.mp3" loop preload="auto"></audio>
+<button id="bgm-btn" aria-label="Música" title="Música" style="position:fixed;left:16px;bottom:16px;z-index:9999;width:44px;height:44px;border-radius:50%;border:2px solid #ff2bd6;background:#1a0033;color:#ff2bd6;font-size:20px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4);opacity:.9">🔇</button>
+<script>(function(){var a=document.getElementById('bgm'),b=document.getElementById('bgm-btn'),K='vitrina_musica_pausada';a.volume=0.35;
+function ui(){b.textContent=a.paused?'🔇':'🔊';}
+function go(){return a.play().then(ui).catch(function(){ui();});}
+function first(e){if(e&&e.target===b)return;rm();if(localStorage.getItem(K)!=='1'&&a.paused)go();}
+function rm(){['click','touchstart','keydown'].forEach(function(t){document.removeEventListener(t,first,true);});}
+b.addEventListener('click',function(){rm();if(a.paused){localStorage.removeItem(K);go();}else{a.pause();localStorage.setItem(K,'1');ui();}});
+a.addEventListener('play',ui);a.addEventListener('pause',ui);
+if(localStorage.getItem(K)!=='1'){a.play().then(ui).catch(function(){['click','touchstart','keydown'].forEach(function(t){document.addEventListener(t,first,true);});});}
+})();</script>
+</body></html>
